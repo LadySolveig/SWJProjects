@@ -1,17 +1,18 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'relative' => true));
 ?>
@@ -80,12 +81,12 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 						<?php endif; ?>
 					</ul>
 					<div class="text-center">
-						<?php if (($this->project->download_type === 'paid' && $this->project->payment->get('link'))): ?>
+						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('link') && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->payment->get('link'); ?>"
 							   class="btn btn-success col-12">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 							</a>
-						<?php elseif ($this->project->download_type === 'free'): ?>
+						<?php elseif ($this->project->download_type === 'free' && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->download; ?>" class="btn btn-primary col-12"
 							   target="_blank">
 								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>
@@ -142,9 +143,35 @@ HTMLHelper::script('com_swjprojects/popup.min.js', array('version' => 'auto', 'r
 					if (empty($item['title']) && empty($item['description'])) continue;
 					?>
 					<div class="item">
-						<?php if (!empty($item['title'])): ?>
-							<h3><?php echo $item['title']; ?></h3>
-						<?php endif; ?>
+						<div class="d-flex justify-content-between align-items-center">
+							<?php if (!empty($item['title'])): ?>
+								<h3><?php echo $item['title']; ?></h3>
+							<?php endif; ?>
+							<?php if (!empty($item['type'])) {
+								/**
+								 * params
+								 * - type - changelog item type - security, fix etc.
+								 * - class - badge css class, For ex. 'badge bg-danger'. If empty - default Bootstrap 5 classes used
+								 * - css_classes_array - associative array of css classes for badge For ex. 'fix' => 'badge bg-warning'. If empty - default Bootstrap 5 classes used
+								 */
+
+//								$css_classes_array = [
+//									'security' => 'label label-important',
+//									'fix' => 'label label-inverse',
+//									'language' => 'label label-info',
+//									'addition' => 'label label-success',
+//									'change' => 'label label-warning',
+//									'remove' => 'label',
+//									'note' => 'label label-info',
+//								];
+									echo LayoutHelper::render('components.swjprojects.changelog.badge', [
+										'type' => $item['type'],
+//										'class' => 'h1',
+//										'css_classes_array' => $css_classes_array,
+									]);
+								}
+								?>
+						</div>
 						<?php if (!empty($item['description'])): ?>
 							<div class="description"><?php echo $item['description']; ?></div>
 						<?php endif; ?>

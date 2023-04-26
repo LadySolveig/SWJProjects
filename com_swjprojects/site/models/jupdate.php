@@ -1,11 +1,11 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -545,9 +545,11 @@ class SWJProjectsModelJUpdate extends BaseDatabaseModel
 						$downloadurl = $downloads->addChild('downloadurl', $site_root . $item->download);
 						$downloadurl->addAttribute('type', 'full');
 						$downloadurl->addAttribute('format', File::getExt($item->file));
-						$update->addChild('sha256',hash_file('sha256',$site_root . $item->download));
-						$update->addChild('sha384',hash_file('sha384',$site_root . $item->download));
-						$update->addChild('sha512',hash_file('sha512',$site_root . $item->download));
+
+						$file_path_from_root = $files_root . '/' . $item->id.'/'.$item->file;
+						$update->addChild('sha256',hash_file('sha256',$file_path_from_root));
+						$update->addChild('sha384',hash_file('sha384',$file_path_from_root));
+						$update->addChild('sha512',hash_file('sha512',$file_path_from_root));
 					}
 
 					$tags = $update->addChild('tags');

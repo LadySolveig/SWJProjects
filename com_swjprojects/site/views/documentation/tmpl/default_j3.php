@@ -1,11 +1,11 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -84,11 +84,11 @@ HTMLHelper::stylesheet('com_swjprojects/site.min.css', array('version' => 'auto'
 						<?php endif; ?>
 					</ul>
 					<div class="buttons">
-						<?php if (($this->project->download_type === 'paid' && $this->project->payment->get('link'))): ?>
+						<?php if ($this->project->download_type === 'paid' && $this->project->payment->get('link') && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->payment->get('link'); ?>" class="btn btn-success">
 								<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 							</a>
-						<?php elseif ($this->project->download_type === 'free'): ?>
+						<?php elseif ($this->project->download_type === 'free' && !empty($this->project->version)): ?>
 							<a href="<?php echo $this->project->download; ?>" class="btn btn-primary"
 							   target="_blank">
 								<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>

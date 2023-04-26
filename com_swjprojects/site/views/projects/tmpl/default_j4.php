@@ -1,11 +1,11 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -108,12 +108,12 @@ $title = ($this->category->id > 1) ? $this->category->title
 												</li>
 											<?php endif; ?>
 										</ul>
-										<?php if (($item->download_type === 'paid' && $item->payment->get('link'))): ?>
+										<?php if ($item->download_type === 'paid' && $item->payment->get('link') && !empty($item->version)): ?>
 											<a href="<?php echo $item->payment->get('link'); ?>"
 											   class="btn btn-success">
 												<?php echo Text::_('COM_SWJPROJECTS_BUY'); ?>
 											</a>
-										<?php elseif ($item->download_type === 'free'): ?>
+										<?php elseif ($item->download_type === 'free' && !empty($item->version)): ?>
 											<a href="<?php echo $item->download; ?>" class="btn btn-primary"
 											   target="_blank">
 												<?php echo Text::_('COM_SWJPROJECTS_DOWNLOAD'); ?>

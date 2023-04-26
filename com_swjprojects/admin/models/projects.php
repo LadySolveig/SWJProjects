@@ -1,11 +1,11 @@
 <?php
 /*
  * @package    SW JProjects Component
- * @version    __DEPLOY_VERSION__
- * @author     Septdir Workshop - www.septdir.com
- * @copyright  Copyright (c) 2018 - 2022 Septdir Workshop. All rights reserved.
+ * @version    1.6.4
+ * @author Septdir Workshop, <https://septdir.com>, Sergey Tolkachyov <https://web-tolk.ru>
+ * @сopyright (c) 2018 - April 2023 Septdir Workshop, Sergey Tolkachyov. All rights reserved.
  * @license    GNU/GPL license: https://www.gnu.org/copyleft/gpl.html
- * @link       https://www.septdir.com/
+ * @link https://septdir.com, https://web-tolk.ru
  */
 
 defined('_JEXEC') or die;
@@ -144,8 +144,8 @@ class SWJProjectsModelProjects extends ListModel
 		}
 
 		// Filter by download_type state
-		$download_type = trim($this->getState('filter.download_type'));
-		if (!empty($download_type))
+		$download_type = $this->getState('filter.download_type');
+		if (!empty($download_type) && !empty($download_type = trim($download_type)))
 		{
 			$query->where($db->quoteName('p.download_type') . ' = ' . $db->quote($download_type));
 		}
